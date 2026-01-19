@@ -3210,6 +3210,7 @@ name = "not_a_phantom"
 version = "0.1.0"
 dependencies = [
  "bevy",
+ "bevy_asset",
  "bevy_ecs",
 ]
 
