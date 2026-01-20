@@ -6,6 +6,7 @@ use bevy::{
     math::bounding::{Aabb2d, BoundingCircle, BoundingVolume, IntersectsVolume},
     prelude::*,
 };
+use not_a_phantom::setup::setup::{self};
 
 mod stepping;
 
@@ -50,7 +51,7 @@ const WALL_COLOR: Color = Color::srgb(0.8, 0.8, 0.8);
 const TEXT_COLOR: Color = Color::srgb(0.5, 0.5, 1.0);
 const SCORE_COLOR: Color = Color::srgb(1.0, 0.5, 0.5);
 
-fn main() {
+fn _main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .add_plugins(
@@ -72,6 +73,21 @@ fn main() {
         )
         .add_systems(Update, update_scoreboard)
         .add_observer(play_collision_sound)
+        .run();
+}
+
+fn main() {
+    App::new()
+        .add_plugins(DefaultPlugins)
+        .add_plugins(
+            stepping::SteppingPlugin::default()
+                .add_schedule(Update)
+                .add_schedule(FixedUpdate)
+                .at(percent(35), percent(50)),
+        )
+        .insert_resource(Score(0))
+        .insert_resource(ClearColor(BACKGROUND_COLOR))
+        .add_systems(Startup, setup::setup)
         .run();
 }
 
