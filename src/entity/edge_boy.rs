@@ -7,16 +7,19 @@ use bevy::{
 };
 use bevy_ecs::{component::Component, system::Commands};
 
-use crate::entity::{collider::Collider, wall::BOTTOM_WALL};
+use crate::entity::{
+    collider::Collider,
+    wall::{BOTTOM_WALL, WALL_THICKNESS},
+};
 
 #[derive(Component)]
 pub struct EdgeBoy;
 
 const EDGE_COLOR: Color = Color::srgb(0.3, 0.3, 0.7);
-const PADDLE_SIZE: Vec2 = Vec2::new(120.0, 20.0);
+const PADDLE_SIZE: Vec2 = Vec2::new(20.0, 20.0);
 
 pub fn spawn(commands: &mut Commands) {
-    let paddle_y = BOTTOM_WALL;
+    let paddle_y = BOTTOM_WALL + PADDLE_SIZE.y - WALL_THICKNESS / 2.;
 
     commands.spawn((
         Sprite::from_color(EDGE_COLOR, Vec2::ONE),
