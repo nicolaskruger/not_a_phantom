@@ -8,7 +8,10 @@ use bevy::{
 };
 use not_a_phantom::{
     plugin::plugins_system::plugin_system,
-    setup::setup::{self},
+    setup::{
+        setup::{self},
+        setup_system::setup_system,
+    },
     update::update_system::update_system,
 };
 
@@ -81,12 +84,12 @@ fn _main() {
 }
 
 fn main() {
-    let mut app = App::new();
+    let app = App::new();
     let mut app = plugin_system(app);
 
-    app.insert_resource(ClearColor(BACKGROUND_COLOR))
-        .add_systems(Startup, setup::setup);
+    app.insert_resource(ClearColor(BACKGROUND_COLOR));
 
+    let app = setup_system(app);
     let mut app = update_system(app);
     app.run();
 }
