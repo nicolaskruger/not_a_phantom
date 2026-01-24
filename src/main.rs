@@ -7,6 +7,7 @@ use bevy::{
     prelude::*,
 };
 use not_a_phantom::{
+    plugin::plugins_system::plugin_system,
     setup::setup::{self},
     update::update_system::update_system,
 };
@@ -81,16 +82,9 @@ fn _main() {
 
 fn main() {
     let mut app = App::new();
+    let mut app = plugin_system(app);
 
-    app.add_plugins(DefaultPlugins)
-        .add_plugins(
-            stepping::SteppingPlugin::default()
-                .add_schedule(Update)
-                .add_schedule(FixedUpdate)
-                .at(percent(35), percent(50)),
-        )
-        .insert_resource(Score(0))
-        .insert_resource(ClearColor(BACKGROUND_COLOR))
+    app.insert_resource(ClearColor(BACKGROUND_COLOR))
         .add_systems(Startup, setup::setup);
 
     let mut app = update_system(app);
