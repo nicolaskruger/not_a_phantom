@@ -6,7 +6,10 @@ use bevy::{
     math::bounding::{Aabb2d, BoundingCircle, BoundingVolume, IntersectsVolume},
     prelude::*,
 };
-use not_a_phantom::setup::setup::{self};
+use not_a_phantom::{
+    setup::setup::{self},
+    update::update_system::update_system,
+};
 
 mod stepping;
 
@@ -77,8 +80,9 @@ fn _main() {
 }
 
 fn main() {
-    App::new()
-        .add_plugins(DefaultPlugins)
+    let mut app = App::new();
+
+    app.add_plugins(DefaultPlugins)
         .add_plugins(
             stepping::SteppingPlugin::default()
                 .add_schedule(Update)
@@ -87,8 +91,10 @@ fn main() {
         )
         .insert_resource(Score(0))
         .insert_resource(ClearColor(BACKGROUND_COLOR))
-        .add_systems(Startup, setup::setup)
-        .run();
+        .add_systems(Startup, setup::setup);
+
+    let mut app = update_system(app);
+    app.run();
 }
 
 #[derive(Component)]
