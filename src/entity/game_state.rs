@@ -1,15 +1,20 @@
 use bevy::prelude::*;
 
-#[derive(States, Debug, Clone, Eq, PartialEq, Hash, Default)]
-pub enum GameStateEnum {
+#[derive(States, Debug, Clone, Eq, PartialEq, Hash, Default, Component)]
+pub enum GameState {
     #[default]
     Playing,
     ItsOver,
 }
 
 #[derive(Component)]
-pub struct GameState(GameStateEnum);
+pub struct Game {
+    pub state: GameState,
+}
 
 pub fn spawn(commands: &mut Commands) {
-    commands.spawn((GameState(GameStateEnum::Playing)));
+    let game = Game {
+        state: GameState::Playing,
+    };
+    commands.spawn(game);
 }
