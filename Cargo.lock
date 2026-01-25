@@ -3212,6 +3212,7 @@ dependencies = [
  "bevy",
  "bevy_asset",
  "bevy_ecs",
+ "rand",
 ]
 
 [[package]]
