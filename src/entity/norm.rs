@@ -26,7 +26,7 @@ pub fn spawn(commands: &mut Commands) {
     commands.spawn((
         Sprite::from_color(NORM_COLOR, Vec2::ONE),
         Transform {
-            translation: Vec3::new(0.0, paddle_y, 0.0),
+            translation: Vec3::new(50.0, paddle_y, 0.0),
             scale: NORM_BOY_SIZE.extend(1.0),
             ..default()
         },

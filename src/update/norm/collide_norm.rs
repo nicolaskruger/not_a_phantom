@@ -5,12 +5,12 @@ use bevy_ecs::{
 };
 
 use crate::{
-    entity::{collider::Collider, edge_boy::EdgeBoy},
+    entity::{edge_boy::EdgeBoy, norm::Norm},
     tool_kit::is_colliding::is_colliding,
 };
 
 pub fn collide_norm(
-    norms_query: Query<&Transform, With<Collider>>,
+    norms_query: Query<&Transform, With<Norm>>,
     edge_boy_query: Single<&Transform, With<EdgeBoy>>,
 ) {
     let edge_boy = edge_boy_query.into_inner();
