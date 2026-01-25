@@ -15,7 +15,7 @@ use bevy_ecs::{
     system::{Commands, Res, ResMut},
 };
 
-use crate::entity::{death, edge_boy, norm, wall};
+use crate::entity::{death, edge_boy, game_state, norm, wall};
 
 const PADDLE_SIZE: Vec2 = Vec2::new(120.0, 20.0);
 const GAP_BETWEEN_PADDLE_AND_FLOOR: f32 = 60.0;
@@ -70,6 +70,7 @@ pub fn setup(
 ) {
     commands.spawn(Camera2d);
 
+    game_state::spawn(&mut commands);
     death::spawn(&mut commands);
     edge_boy::spawn(&mut commands);
     norm::spawn(&mut commands);
