@@ -1,30 +1,25 @@
-use bevy::{
-    color::Color,
-    text::{TextColor, TextFont, TextSpan},
-    ui::{AlignSelf, JustifySelf, Node, PositionType, Val, widget::Text},
-    utils::default,
-};
-use bevy_ecs::{children, component::Component, system::Commands};
-use rand::{Rng, distr::uniform::SampleRange};
+use bevy::{color::Color, ui::Val};
+use bevy_ecs::{component::Component, system::Commands};
+use rand::distr::uniform::SampleRange;
 
 #[derive(Component)]
 pub struct Death;
 
-const GAP_BETWEEN_BRICKS_AND_CEILING: f32 = 20.0;
-const GAP_BETWEEN_BRICKS_AND_SIDES: f32 = 20.0;
+pub const GAP_BETWEEN_BRICKS_AND_CEILING: f32 = 20.0;
+pub const GAP_BETWEEN_BRICKS_AND_SIDES: f32 = 20.0;
 
-const SCOREBOARD_FONT_SIZE: f32 = 33.0;
-const SCOREBOARD_TEXT_PADDING: Val = Val::Px(5.0);
+pub const DEATH_FONT_SIZE: f32 = 33.0;
+pub const SCOREBOARD_TEXT_PADDING: Val = Val::Px(5.0);
 
-const BACKGROUND_COLOR: Color = Color::srgb(0.9, 0.9, 0.9);
-const PADDLE_COLOR: Color = Color::srgb(0.3, 0.3, 0.7);
-const BALL_COLOR: Color = Color::srgb(1.0, 0.5, 0.5);
-const BRICK_COLOR: Color = Color::srgb(0.5, 0.5, 1.0);
-const WALL_COLOR: Color = Color::srgb(0.8, 0.8, 0.8);
-const TEXT_COLOR: Color = Color::srgb(0.5, 0.5, 1.0);
-const SCORE_COLOR: Color = Color::srgb(1.0, 0.5, 0.5);
+pub const BACKGROUND_COLOR: Color = Color::srgb(0.9, 0.9, 0.9);
+pub const PADDLE_COLOR: Color = Color::srgb(0.3, 0.3, 0.7);
+pub const BALL_COLOR: Color = Color::srgb(1.0, 0.5, 0.5);
+pub const BRICK_COLOR: Color = Color::srgb(0.5, 0.5, 1.0);
+pub const WALL_COLOR: Color = Color::srgb(0.8, 0.8, 0.8);
+pub const TEXT_COLOR: Color = Color::srgb(0.5, 0.5, 1.0);
+pub const DEATH_COLOR: Color = Color::srgb(1.0, 0.5, 0.5);
 
-fn death_talk<'a>() -> Vec<&'a str> {
+pub fn death_talk<'a>() -> Vec<&'a str> {
     let phrases = vec![
         "Oh… that’s dark. Anyway.",
         "You’ll probably grow out of that.",
@@ -58,7 +53,7 @@ fn death_talk<'a>() -> Vec<&'a str> {
     phrases
 }
 
-fn random_pick<'a>() -> &'a str {
+pub fn random_pick<'a>() -> &'a str {
     let mut rng = rand::rng();
     let talk = death_talk();
 
@@ -71,28 +66,4 @@ fn random_pick<'a>() -> &'a str {
     }
 }
 
-pub fn spawn(commands: &mut Commands) {
-    commands.spawn((
-        Text::new(random_pick()),
-        TextFont {
-            font_size: SCOREBOARD_FONT_SIZE,
-            ..default()
-        },
-        TextColor(TEXT_COLOR),
-        Death,
-        Node {
-            position_type: PositionType::Absolute,
-            align_self: AlignSelf::Center,
-            justify_self: JustifySelf::Center,
-            ..default()
-        },
-        children![(
-            TextSpan::default(),
-            TextFont {
-                font_size: SCOREBOARD_FONT_SIZE,
-                ..default()
-            },
-            TextColor(SCORE_COLOR),
-        )],
-    ));
-}
+pub fn spawn(_: &mut Commands) {}

@@ -1,7 +1,4 @@
-use bevy::{
-    math::{self, bounding::Aabb2d},
-    transform::components::Transform,
-};
+use bevy::{math::bounding::Aabb2d, transform::components::Transform};
 use bevy_ecs::{
     query::With,
     system::{Query, Single},
@@ -10,7 +7,7 @@ use bevy_ecs::{
 use crate::{
     entity::{
         edge_boy::EdgeBoy,
-        game_state::{self, Game, GameState},
+        game_state::{Game, GameState},
         norm::Norm,
     },
     tool_kit::is_colliding::is_colliding,
@@ -27,11 +24,14 @@ pub fn collide_norm(
         edge_boy.scale.truncate() / 2.,
     );
 
-    norms_query.iter().for_each(|norm| {
-        let collision_norm = Aabb2d::new(norm.translation.truncate(), norm.scale.truncate() / 2.);
+    if game.state == GameState::Playing {
+        norms_query.iter().for_each(|norm| {
+            let collision_norm =
+                Aabb2d::new(norm.translation.truncate(), norm.scale.truncate() / 2.);
 
-        if is_colliding(&collision_edge_boy, &collision_norm) {
-            game.state = GameState::ItsOver;
-        }
-    });
+            if is_colliding(&collision_edge_boy, &collision_norm) {
+                game.state = GameState::ItsOver;
+            }
+        });
+    }
 }

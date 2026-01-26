@@ -5,6 +5,7 @@ pub enum GameState {
     #[default]
     Playing,
     ItsOver,
+    ShowDeath,
 }
 
 #[derive(Component)]
