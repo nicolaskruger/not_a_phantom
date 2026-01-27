@@ -1,29 +1,28 @@
-use bevy::{
-    input::keyboard::KeyCode,
-    text::{TextColor, TextFont, TextSpan},
-    transform::components::Transform,
-    ui::{AlignSelf, JustifySelf, Node, PositionType, widget::Text},
-    utils::default,
-};
+use bevy::input::{ButtonInput, keyboard::KeyCode};
 use bevy_ecs::{
-    children,
+    entity::{ContainsEntity, Entity},
     query::With,
-    system::{Commands, Single},
+    system::{Commands, Res, Single},
 };
 
 use crate::entity::{
-    death::{DEATH_COLOR, DEATH_FONT_SIZE, Death, TEXT_COLOR, random_pick},
-    edge_boy::EdgeBoy,
+    death::{Death, spawn as death_spawn},
+    edge_boy::{EdgeBoy, spawn as edge_boy_spaw},
     game_state::{Game, GameState},
 };
 
-pub fn show_death(
+pub fn reincarnate(
     keyboard_input: Res<ButtonInput<KeyCode>>,
-    mut edge_boy: Single<&mut Transform, With<EdgeBoy>>,
+    edge_boy: Single<Entity, With<EdgeBoy>>,
+    death: Single<Entity, With<Death>>,
     mut game: Single<&mut Game, With<Game>>,
     mut commands: Commands,
 ) {
     if game.state == GameState::ShowDeath && keyboard_input.pressed(KeyCode::Space) {
+        commands.entity(edge_boy.entity()).despawn();
+        commands.entity(death.entity()).despawn();
+        edge_boy_spaw(&mut commands);
+
         game.state = GameState::Playing;
     }
 }
