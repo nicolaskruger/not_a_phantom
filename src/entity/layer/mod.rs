@@ -1,17 +1,44 @@
-use bevy_ecs::system::Commands;
+use bevy_ecs::{
+    entity::Entity,
+    query::With,
+    system::{Commands, Single},
+};
 
-use crate::entity::layer::layer_one::{FirstLayer, FirstLayerImpl};
+use crate::entity::{
+    death::Death,
+    edge_boy::EdgeBoy,
+    game_state::Game,
+    layer::layer_one::{FirstLayer, FirstLayerImpl},
+};
 
 pub mod layer_one;
 
 pub trait Layer: Send + Sync {
-    fn dispose(&self);
-    fn reset(&self);
-    fn load(&self);
+    fn dispose(
+        &self,
+        edge_boy: &Single<Entity, With<EdgeBoy>>,
+        death: &Single<Entity, With<Death>>,
+        commands: &mut Commands,
+        game: &mut Game,
+    );
+    fn reset(
+        &self,
+        edge_boy: Single<Entity, With<EdgeBoy>>,
+        death: Single<Entity, With<Death>>,
+        commands: &mut Commands,
+        game: &mut Game,
+    );
+    fn load(
+        &self,
+        edge_boy: Single<Entity, With<EdgeBoy>>,
+        death: Single<Entity, With<Death>>,
+        commands: &mut Commands,
+        game: &mut Game,
+    );
 }
 
 pub fn spawn(commands: &mut Commands) {
     let first_layer: Box<dyn Layer> = Box::new(FirstLayerImpl {});
-    let first_layer = FirstLayer { layer: first_layer };
+    let first_layer = FirstLayer::new(first_layer);
     commands.spawn(first_layer);
 }

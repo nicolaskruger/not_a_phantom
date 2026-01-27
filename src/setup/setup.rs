@@ -15,7 +15,7 @@ use bevy_ecs::{
     system::{Commands, Res, ResMut},
 };
 
-use crate::entity::{death, edge_boy, game_state, norm, wall};
+use crate::entity::{death, edge_boy, game_state, layer, norm, wall};
 
 pub fn setup(
     mut commands: Commands,
@@ -30,4 +30,5 @@ pub fn setup(
     edge_boy::spawn(&mut commands);
     norm::spawn(&mut commands);
     wall::spawn(&mut commands);
+    layer::spawn(&mut commands);
 }
