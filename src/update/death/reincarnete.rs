@@ -7,7 +7,7 @@ use bevy_ecs::{
 
 use crate::entity::{
     death::Death,
-    edge_boy::{EdgeBoy, spawn as edge_boy_spaw},
+    edge_boy::EdgeBoy,
     game_state::{Game, GameState},
     layer::{Layer, layer_one::FirstLayer},
 };
@@ -21,10 +21,7 @@ pub fn reincarnate(
     mut commands: Commands,
 ) {
     if game.state == GameState::ShowDeath && keyboard_input.pressed(KeyCode::Space) {
-        layer_one.dispose(edge_boy, death, &mut commands, &mut game);
-
-        edge_boy_spaw(&mut commands);
-
+        layer_one.reset(&edge_boy, &death, &mut commands, &mut game);
         game.state = GameState::Playing;
     }
 }

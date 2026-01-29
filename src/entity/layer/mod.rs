@@ -23,15 +23,15 @@ pub trait Layer: Send + Sync {
     );
     fn reset(
         &self,
-        edge_boy: Single<Entity, With<EdgeBoy>>,
-        death: Single<Entity, With<Death>>,
+        edge_boy: &Single<Entity, With<EdgeBoy>>,
+        death: &Single<Entity, With<Death>>,
         commands: &mut Commands,
         game: &mut Game,
     );
     fn load(
         &self,
-        edge_boy: Single<Entity, With<EdgeBoy>>,
-        death: Single<Entity, With<Death>>,
+        edge_boy: &Single<Entity, With<EdgeBoy>>,
+        death: &Single<Entity, With<Death>>,
         commands: &mut Commands,
         game: &mut Game,
     );

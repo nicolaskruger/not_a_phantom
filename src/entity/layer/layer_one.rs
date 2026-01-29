@@ -25,8 +25,8 @@ impl Layer for FirstLayerImpl {
 
     fn reset(
         &self,
-        edge_boy: Single<Entity, With<EdgeBoy>>,
-        death: Single<Entity, With<Death>>,
+        edge_boy: &Single<Entity, With<EdgeBoy>>,
+        death: &Single<Entity, With<Death>>,
         commands: &mut Commands,
         game: &mut Game,
     ) {
@@ -36,8 +36,8 @@ impl Layer for FirstLayerImpl {
 
     fn load(
         &self,
-        _: Single<Entity, With<EdgeBoy>>,
-        _: Single<Entity, With<Death>>,
+        _: &Single<Entity, With<EdgeBoy>>,
+        _: &Single<Entity, With<Death>>,
         commands: &mut Commands,
         game: &mut Game,
     ) {
@@ -69,8 +69,8 @@ impl Layer for FirstLayer {
     }
     fn reset(
         &self,
-        edge_boy: Single<Entity, With<EdgeBoy>>,
-        death: Single<Entity, With<Death>>,
+        edge_boy: &Single<Entity, With<EdgeBoy>>,
+        death: &Single<Entity, With<Death>>,
         commands: &mut Commands,
         game: &mut Game,
     ) {
@@ -78,8 +78,8 @@ impl Layer for FirstLayer {
     }
     fn load(
         &self,
-        edge_boy: Single<Entity, With<EdgeBoy>>,
-        death: Single<Entity, With<Death>>,
+        edge_boy: &Single<Entity, With<EdgeBoy>>,
+        death: &Single<Entity, With<Death>>,
         commands: &mut Commands,
         game: &mut Game,
     ) {
