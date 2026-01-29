@@ -16,12 +16,14 @@ use crate::entity::{
 
 pub fn move_edge_boy(
     keyboard_input: Res<ButtonInput<KeyCode>>,
-    mut edge_boy: Single<&mut Transform, With<EdgeBoy>>,
+    edge_boy: Single<(&mut Transform, &mut EdgeBoy), With<EdgeBoy>>,
     game: Single<&mut Game, With<Game>>,
     time: Res<Time>,
 ) {
     if game.state == GameState::Playing {
         let mut direction = 0.0;
+
+        let (mut edge_boy_translation, mut edge_boy_entity) = edge_boy.into_inner();
 
         if keyboard_input.pressed(KeyCode::KeyH) {
             direction -= 1.0;
@@ -31,12 +33,16 @@ pub fn move_edge_boy(
             direction += 1.0;
         }
 
+        if keyboard_input.pressed(KeyCode::KeyW) {
+            edge_boy_entity.is_visible = false;
+        }
+
         let new_edge_boy_position =
-            edge_boy.translation.x + direction * EDGE_BOY_SPEED * time.delta_secs();
+            edge_boy_translation.translation.x + direction * EDGE_BOY_SPEED * time.delta_secs();
 
         let left_bound = LEFT_WALL + WALL_THICKNESS / 2.0 + EDGE_BOY_SIZE.x / 2.0;
         let right_bound = RIGHT_WALL - WALL_THICKNESS / 2.0 - EDGE_BOY_SIZE.x / 2.0;
 
-        edge_boy.translation.x = new_edge_boy_position.clamp(left_bound, right_bound);
+        edge_boy_translation.translation.x = new_edge_boy_position.clamp(left_bound, right_bound);
     }
 }

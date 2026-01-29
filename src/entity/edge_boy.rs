@@ -13,9 +13,12 @@ use crate::entity::{
 };
 
 #[derive(Component)]
-pub struct EdgeBoy;
+pub struct EdgeBoy {
+    pub is_visible: bool,
+}
 
 pub const EDGE_COLOR: Color = Color::srgb(0.3, 0.3, 0.7);
+pub const EDGE_INVISIBLE_COLOR: Color = Color::srgb(0.2, 0.2, 0.6);
 pub const EDGE_BOY_SIZE: Vec2 = Vec2::new(20.0, 20.0);
 pub const EDGE_BOY_PADDING: f32 = 10.0;
 pub const EDGE_BOY_SPEED: f32 = 500.0;
@@ -30,7 +33,7 @@ pub fn spawn(commands: &mut Commands) {
             scale: EDGE_BOY_SIZE.extend(1.0),
             ..default()
         },
-        EdgeBoy,
+        EdgeBoy { is_visible: true },
         Collider,
     ));
 }
